@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {CdkDragDrop} from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-c2',
@@ -15,28 +16,24 @@ export class C2Component implements OnInit {
   ngOnInit(): void {
   }
 
-  l1(event) {
-    console.log(event);
-    const offsetLeft = event.item.element.nativeElement.offsetLeft;
-    const offsetTop = event.item.element.nativeElement.offsetTop;
+  l1(event: CdkDragDrop<any>) {
+    const drop = document.getElementById('dropList');
 
-    const drag = document.getElementById('dragList');
+    const {offsetLeft, offsetTop} = event.item.getRootElement();
 
-    console.log(event.distance.x);
+    const dropPositionLeft = offsetLeft + event.distance.x;
+    const dropPositionTop = offsetTop + event.distance.y;
 
-    const elDistanceInContainer = drag.clientWidth - offsetLeft;
-    console.log(elDistanceInContainer);
-    const margin = 400;
-    console.log(margin);
+    const finalContainerPositionLeft = dropPositionLeft - drop.offsetLeft;
+    const finalContainerPositionTop = dropPositionTop - drop.offsetTop;
 
-    let div = document.createElement('div');
+    const div = document.createElement('div');
     div.style.width = '50px';
     div.style.height = '50px';
     div.style.background = 'blue';
     div.style.position = 'absolute';
-    div.style.left = (event.distance.x - elDistanceInContainer - margin) + 'px';
-    div.style.top = (event.distance.y + offsetTop) + 'px';
-    const drop = document.getElementById('dropList');
+    div.style.left = finalContainerPositionLeft + 'px';
+    div.style.top = finalContainerPositionTop + 'px';
     drop.appendChild(div);
   }
 }
