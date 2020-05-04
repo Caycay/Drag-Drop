@@ -1,0 +1,9 @@
+<div class="a"
+     cdkDropList
+     id="dragList"
+     [cdkDropListData]="list"
+     [cdkDropListConnectedTo]="['dropList']"
+     (cdkDropListDropped)="l1($event)"
+>
+  <app-c3 *ngFor="let l of list" [id]="l.a"></app-c3>
+</div>
